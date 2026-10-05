@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARVELI — Products Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body data-page="products">
+
+    <div class="admin-container">
+
+        <div id="sidebarPlaceholder"></div>
+
+        <main class="admin-main">
+
+            <header class="admin-header page-header">
+                <div class="header-left">
+                    <button class="mobile-toggle-btn" id="mobileToggleBtn" aria-label="Open Sidebar">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
+                    <div>
+                        <h1 class="header-title">Products Management</h1>
+                        <p class="header-subtitle">Add, edit, view and delete plants in your catalog.</p>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <div class="header-search">
+                        <span class="search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <circle cx="10.5" cy="10.5" r="6.5" stroke="#2D6A4F" stroke-width="2" />
+                                <path d="M16 16L21 21" stroke="#2D6A4F" stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                        </span>
+                        <input type="text" id="productSearchInput" placeholder="Search plants, orders...">
+                    </div>
+                </div>
+            </header>
+
+            <div class="card dashboard-card">
+                <div class="card-header flex-between">
+                    <div>
+                        <h3 class="card-title">Plant Products Catalog</h3>
+                        <p class="card-subtitle">View, edit, add and manage your inventory items</p>
+                    </div>
+                    <button class="btn btn-primary btn-add-product" onclick="openAddProductModal()">
+                        + Add New Product
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>IMAGE</th>
+                                <th>PRODUCT NAME</th>
+                                <th>CATEGORY</th>
+                                <th>PRICE</th>
+                                <th>STOCK</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                            <tr>
+                                <td>
+                                    <img src="../images/snake-plant.jpg" alt="Snake Plant" class="tbl-thumb" loading="lazy">
+                                </td>
+                                <td>
+                                    <strong>Snake Plant</strong><br>
+                                    <small class="cell-caption">Air purifying plant for bedrooms.</small>
+                                </td>
+                                <td><span class="badge badge-confirmed">Indoor Plants</span></td>
+                                <td><strong>₹449</strong></td>
+                                <td><span class="badge badge-in-stock">15 units</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline" onclick="openEditProductModal(1)">Edit</button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteProduct(1)">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=200&q=80" alt="Monstera Deliciosa" class="tbl-thumb" loading="lazy">
+                                </td>
+                                <td>
+                                    <strong>Monstera Deliciosa</strong><br>
+                                    <small class="cell-caption">Tropical Swiss cheese plant.</small>
+                                </td>
+                                <td><span class="badge badge-confirmed">Indoor Plants</span></td>
+                                <td><strong>₹799</strong></td>
+                                <td><span class="badge badge-low-stock">4 units</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline" onclick="openEditProductModal(2)">Edit</button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteProduct(2)">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="../images/areca-palm.jpg" alt="Areca Palm" class="tbl-thumb" loading="lazy">
+                                </td>
+                                <td>
+                                    <strong>Areca Palm</strong><br>
+                                    <small class="cell-caption">Feathery palm for living rooms & gardens.</small>
+                                </td>
+                                <td><span class="badge badge-confirmed">Outdoor Plants</span></td>
+                                <td><strong>₹650</strong></td>
+                                <td><span class="badge badge-low-stock">8 units</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline" onclick="openEditProductModal(3)">Edit</button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteProduct(3)">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="../images/peace-lily.jpg" alt="Peace Lily" class="tbl-thumb" loading="lazy">
+                                </td>
+                                <td>
+                                    <strong>Peace Lily</strong><br>
+                                    <small class="cell-caption">Elegant white blooms & dark green foliage.</small>
+                                </td>
+                                <td><span class="badge badge-confirmed">Flowering Plants</span></td>
+                                <td><strong>₹499</strong></td>
+                                <td><span class="badge badge-low-stock">2 units</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline" onclick="openEditProductModal(4)">Edit</button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteProduct(4)">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=200&q=80" alt="Aloe Vera" class="tbl-thumb" loading="lazy">
+                                </td>
+                                <td>
+                                    <strong>Aloe Vera</strong><br>
+                                    <small class="cell-caption">Medicinal succulent plant.</small>
+                                </td>
+                                <td><span class="badge badge-confirmed">Succulents</span></td>
+                                <td><strong>₹299</strong></td>
+                                <td><span class="badge badge-in-stock">25 units</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline" onclick="openEditProductModal(5)">Edit</button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteProduct(5)">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="https://images.unsplash.com/photo-1545241047-6083a3684587?w=200&q=80" alt="Fiddle Leaf Fig" class="tbl-thumb" loading="lazy">
+                                </td>
+                                <td>
+                                    <strong>Fiddle Leaf Fig</strong><br>
+                                    <small class="cell-caption">Large glossy leaves.</small>
+                                </td>
+                                <td><span class="badge badge-confirmed">Indoor Plants</span></td>
+                                <td><strong>₹1299</strong></td>
+                                <td><span class="badge badge-low-stock">5 units</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline" onclick="openEditProductModal(6)">Edit</button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteProduct(6)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title" id="productModalTitle">Add New Plant Product</h3>
+                <button class="modal-close" onclick="closeProductModal()">&times;</button>
+            </div>
+            <form id="productForm" onsubmit="saveProduct(event)">
+                <input type="hidden" id="productId">
+                <div class="form-group">
+                    <label class="form-label" for="productName">Product Name</label>
+                    <input type="text" id="productName" class="form-input" placeholder="e.g. Snake Plant" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="productPrice">Price (₹)</label>
+                        <input type="number" id="productPrice" class="form-input" min="1" placeholder="499" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="productStock">Stock Quantity</label>
+                        <input type="number" id="productStock" class="form-input" min="0" placeholder="10" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="productCategory">Category</label>
+                    <select id="productCategory" class="form-select" required>
+                        <option value="Indoor Plants">Indoor Plants</option>
+                        <option value="Outdoor Plants">Outdoor Plants</option>
+                        <option value="Flowering Plants">Flowering Plants</option>
+                        <option value="Succulents">Succulents</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="productImage">Image URL or Path</label>
+                    <input type="text" id="productImage" class="form-input" placeholder="https://images.unsplash.com/photo-..." required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="productDescription">Description</label>
+                    <textarea id="productDescription" class="form-textarea" rows="3" placeholder="Brief plant description..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" onclick="closeProductModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/sidebar.js"></script>
+    <script src="js/product.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,686 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plant Booking System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .product-card{display:block}
+    .product-image{height:240px}
+    #new-arrivals .product-image{height:320px}
+    #products .category-image img{border-radius:50%}
+    #products .category-card h3{font-size:17px;margin:0}
+    .navbar {
+      height: 78px;
+      display: flex;
+      align-items: center;
+    }
+    .navbar .logof {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      line-height: 0;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .navbar .logof img {
+      display: block;
+      height: 52px;
+      width: auto;
+      max-width: 175px;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 16px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logof">
+      <img src="../images/tre1.png" alt="Arveli logo">
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="../plantshop/plantshop.html">Shop</a></li>
+      <li><a href="../plantfinder/plantfinder.html">Plant Finder</a></li>
+      <li><a href="../contact/contact.html">Contact</a></li>
+    </ul>
+    <form class="search-container" role="search" autocomplete="off">
+      <label for="home-search" class="material-symbols-outlined" aria-hidden="true">search</label>
+      <input id="home-search" type="search" placeholder="Search plants, seeds, pots..." aria-label="Search products" aria-controls="home-search-suggestions" aria-autocomplete="list" autocomplete="off" />
+      <button class="search-clear" type="button" aria-label="Clear search" hidden>&times;</button>
+      <button class="search-submit" type="submit" aria-label="Search">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M5 12h13M13 6l6 6-6 6" />
+        </svg>
+      </button>
+      <div class="search-suggestions" id="home-search-suggestions" role="listbox" hidden></div>
+    </form>
+    <div class="access-link">
+    
+    <button class="wishlist-link" type="button" aria-label="Open wishlist">
+      <svg xmlns="http://www.w3.org/2000/svg"
+     width="24"
+     height="24"
+     viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="2"
+     stroke-linecap="round"
+     stroke-linejoin="round">
+  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>
+</svg>
+      <span class="wishlist-badge" hidden>0</span>
+    </button>
+    <div>
+    <a class="cart-link" href="#" aria-label="Cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <path d="M6 6h15l-1.5 9h-12z"/>
+        <path d="M6 6L5 3H2"/>
+        <circle cx="9" cy="20" r="1"/>
+        <circle cx="18" cy="20" r="1"/>
+      </svg>
+      <span class="cart-badge" hidden>0</span>
+    </a>
+    </div>
+    <div class="profile">
+      <a href="../login/login.html">
+      <svg xmlns="http://www.w3.org/2000/svg"
+     width="24"
+     height="24"
+     viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="2"
+     stroke-linecap="round"
+     stroke-linejoin="round">
+  <circle cx="12" cy="8" r="4"/>
+  <path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8"/>
+</svg>
+</a>
+      </div>
+      </div>
+  </nav>
+
+  <!-- Chatbot Widget -->
+  <div class="arveli-chatbot">
+    <div class="chatbot-trigger-wrapper">
+      <div class="chatbot-tooltip">Plant Expert Assistant</div>
+      <button id="chatbot-toggle" class="chatbot-toggle" type="button" aria-expanded="false" aria-label="Open Plant Expert Assistant chat">
+        <img src="../images/chatbot-icon.png" alt="Plant Expert Assistant" class="chatbot-toggle-img" />
+      </button>
+    </div>
+
+    <div id="chatbot-panel" class="chatbot-panel" role="dialog" aria-label="Plant Expert Assistant" aria-modal="false">
+      <div class="chatbot-header">
+        <div class="chatbot-header-info">
+          <div class="chatbot-header-avatar">
+            <img src="../images/chatbot-icon.png" alt="" />
+          </div>
+          <div>
+            <h3>Plant Expert Assistant</h3>
+            <span class="chatbot-status"><span class="chatbot-status-dot"></span> Online</span>
+          </div>
+        </div>
+        <button id="chatbot-close" class="chatbot-close" type="button" aria-label="Close chat">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div id="chatbot-messages" class="chatbot-messages">
+        <!-- Messages rendered by chatbot.js -->
+      </div>
+      
+      <form id="chatbot-form" class="chatbot-form">
+        <input id="chatbot-input" type="text" placeholder="Ask about plants, care, seeds..." autocomplete="off" />
+        <button id="chatbot-send" type="submit" aria-label="Send message" disabled>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="wishlist-overlay" aria-hidden="true"></div>
+  <aside class="wishlist-panel" aria-label="Wishlist">
+    <div class="wishlist-header">
+      <h2>My Wishlist</h2>
+      <button class="wishlist-close" type="button" aria-label="Close wishlist">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="wishlist-body">
+      <p class="wishlist-empty">Your wishlist is empty. Tap the heart on any product to save it here.</p>
+      <ul class="wishlist-items" hidden></ul>
+    </div>
+  </aside>
+
+  <div class="cart-overlay" aria-hidden="true"></div>
+  <aside class="cart-panel" aria-label="Cart">
+    <div class="cart-header">
+      <h2>My Cart</h2>
+      <button class="cart-close" type="button" aria-label="Close cart">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="cart-body">
+      <p class="cart-empty">Your cart is empty. Add a plant to get started.</p>
+      <ul class="cart-items" hidden></ul>
+    </div>
+  </aside>
+
+                        <!--search navbar-->
+                      <!--search navbar end-->
+
+    <section class="hero">
+      <div class="hero__container">
+        <div class="hero__content">
+          <p class="hero__eyebrow">Fresh from the nursery</p>
+          <h1 class="hero__heading">Let your space <em>breathe</em> a little greener</h1>
+          <p class="hero__description">Hand-picked indoor plants, delivered with simple care guides — so your green corner grows without the guesswork.</p>
+          <div class="hero__actions">
+            <a href="#products" class="btn btn--primary">Shop the collection</a>
+            <a href="#products" class="btn btn--text">Browse categories &rarr;</a>
+          </div>
+          <div class="hero__stats">
+            <div class="hero__stat">
+              <span class="hero__stat-number">40+</span>
+              <span class="hero__stat-label">Plant varieties</span>
+            </div>
+            <div class="hero__stat">
+              <span class="hero__stat-number">10k+</span>
+              <span class="hero__stat-label">Happy homes</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero__visual">
+          <div class="hero__arch">
+            <img src="https://images.unsplash.com/photo-1545241047-6083a3684587?q=80&w=800&auto=format&fit=crop" alt="Tall green plant in a pot" class="hero__image" />
+          </div>
+          <div class="hero__badge">
+            <span class="hero__badge-label">Care level</span>
+            <span class="hero__badge-value">Easy</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="products-section" id="products">
+
+        <!-- Heading -->
+        <h1>Our Products</h1>
+        <div class="heading-line"></div>
+
+        <!-- Categories -->
+        <div class="products-grid category-grid">
+
+            <a href="../plantshop/plantshop.html" class="product-card category-card">
+                <div class="product-image category-image">
+                    <img src="../images/plants.jpg" alt="Plants">
+                </div>
+                <h3>PLANTS</h3>
+            </a>
+
+            <a href="../seedshop/seedshop.html" class="product-card category-card">
+                <div class="product-image category-image">
+                    <img src="../images/seeed.jpg" alt="Seeds">
+                </div>
+                <h3>SEEDS</h3>
+            </a>
+
+            <div class="product-card category-card">
+                <div class="product-image category-image">
+                  <a href="../toolshop/tool.html">
+                    <img src="../images/tool.jpeg" alt="Gardening tools">
+                </div>
+                <h3>GARDENING TOOLS</h3>
+              </a>
+            </div>
+
+            <a href="../fertshop/fertshop.html" class="product-card category-card">
+                <div class="product-image category-image">
+                    <img src="../images/soil.jpeg" alt="Soil and fertilizer">
+                </div>
+                <h3>SOIL &amp; FERTILIZER</h3>
+            </a>
+
+            <a href="../potshop/potshop.html" class="product-card category-card">
+                <div class="product-image category-image">
+                    <img src="../images/pots.jpg" alt="Pots">
+                </div>
+                <h3>POTS</h3>
+            </a>
+
+            <div class="product-card category-card">
+                <div class="product-image category-image">
+                  <a href="../decorative/decoratives.html">
+                    <img src="../images/accesories.jpg" alt="Accessories">
+                </div>
+                <h3>DECORATIVES</h3>
+            </div>
+          </a>
+        </div>
+
+    </section>
+
+    <section class="products-section" id="new-arrivals">
+
+        <!-- Heading -->
+        <h1>New Arrivals</h1>
+        <div class="heading-line"></div>
+
+        <!-- Products -->
+        <div class="products-grid">
+
+            <!-- Product 1 -->
+            <div class="product-card" data-id="snake-plant" data-name="SNAKE PLANT" data-price="158" data-image="../images/snake-plant.jpg">
+
+                <div class="product-image">
+                    <button class="wishlist-btn" type="button" aria-label="Add to wishlist">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>
+                      </svg>
+                    </button><a href="../productpage/snakelant.html">
+                    <img src="../images/snake-plant.jpg" alt="Snake plant">
+                    </a>
+                </div>
+
+                <h3>SNAKE PLANT</h3>
+                <div class="price">
+                  <h5 class="old_price">₹250</h5>
+                  <h4 class="new-price">₹158</h4>
+
+                </div>
+
+            </div>
+
+
+            <!-- Product 2 -->
+            <div class="product-card" data-id="areca-palm" data-name="ARECA PALM" data-price="158" data-image="../images/areca-palm.jpg">
+
+                <div class="product-image">
+                    <button class="wishlist-btn" type="button" aria-label="Add to wishlist">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>
+                      </svg>
+                    </button><a href="../productpage/areca-palm.html">
+                    <img src="../images/areca-palm.jpg" alt="Areca palm">
+                    </a>
+                </div>
+
+                <h3>ARECA PALM</h3>
+                <div class="price">
+                  <h5 class="old_price">₹250</h5>
+                  <h4 class="new-price">₹158</h4>
+
+                </div>
+
+            </div>    
+
+
+            <!-- Product 3 -->
+            <div class="product-card" data-id="peace-lily" data-name="PEACE LILY" data-price="158" data-image="../images/peace-lily.jpg">
+
+                <div class="product-image">
+                    <button class="wishlist-btn" type="button" aria-label="Add to wishlist">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>
+                      </svg>
+                    </button><a href="../productpage/peace-lily.html">
+                    <img src="../images/peace-lily.jpg" alt="Peace lily">
+                    </a>
+                </div>
+
+                <h3>PEACE LILY</h3>
+                <div class="price">
+                  <h5 class="old_price">₹250</h5>
+                  <h4 class="new-price">₹158</h4>
+
+                </div>
+
+            </div>
+
+
+            <!-- Product 4 -->
+            <div class="product-card" data-id="pothos" data-name="POTHOS" data-price="158" data-image="../images/pothos.jpg">
+
+                <div class="product-image">
+                    <button class="wishlist-btn" type="button" aria-label="Add to wishlist">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>
+                      </svg>
+                    </button><a href="../productpage/pothos.html">
+                    <img src="../images/pothos.jpg" alt="Pothos">
+                    </a>                </div>
+
+                <h3>POTHOS</h3>
+                <div class="price">
+                  <h5 class="old_price">₹250</h5>
+                  <h4 class="new-price">₹158</h4>
+                  
+
+                </div>
+              
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="greenery-inspiration" id="greenery-inspiration">
+      <div class="greenery-inspiration__container">
+        <div class="greenery-inspiration__content">
+          <p class="greenery-inspiration__eyebrow">Living with greenery</p>
+          <p class="greenery-inspiration__copy">
+            An <em>artful approach</em> to indoor plants — made for quiet corners and soft light. A few well-chosen leaves can freshen a room and become part of the story that unfolds around it.
+          </p>
+          <h3 class="greenery-inspiration__tagline">Do it your way</h3>
+          <div class="greenery-inspiration__doodle" aria-hidden="true">
+            <img src="../images/about-cat.png" alt="">
+          </div>
+        </div>
+        <div class="greenery-inspiration__image">
+          <div class="greenery-inspiration__image-frame">
+            <img src="../images/about.jpg" alt="Bright room with plants next to a desk">
+          </div>
+
+          <button class="plant-hotspot" type="button" style="--x: 33%; --y: 30%; --w: 20%; --h: 32%;" aria-label="Fiddle Leaf Fig info" aria-describedby="tip-fiddle">
+            <span class="plant-hotspot__tip" id="tip-fiddle" role="tooltip">
+              <strong>Fiddle Leaf Fig</strong>
+              Loves bright, indirect light. Wipe leaves weekly and water when the top soil feels dry.
+            </span>
+          </button>
+
+          <button class="plant-hotspot" type="button" style="--x: 21%; --y: 48%; --w: 14%; --h: 26%;" aria-label="Snake Plant info" aria-describedby="tip-snake">
+            <span class="plant-hotspot__tip" id="tip-snake" role="tooltip">
+              <strong>Snake Plant</strong>
+              Very low-maintenance. Handles low light and needs water only every 2–3 weeks.
+            </span>
+          </button>
+
+          <button class="plant-hotspot" type="button" style="--x: 34%; --y: 66%; --w: 15%; --h: 20%;" aria-label="Calathea info" aria-describedby="tip-calathea">
+            <span class="plant-hotspot__tip plant-hotspot__tip--left" id="tip-calathea" role="tooltip">
+              <strong>Calathea</strong>
+              Prefers medium light and slightly moist soil. Great for adding patterned leaves.
+            </span>
+          </button>
+
+          <button class="plant-hotspot" type="button" style="--x: 22%; --y: 80%; --w: 16%; --h: 20%;" aria-label="Pothos info" aria-describedby="tip-pothos">
+            <span class="plant-hotspot__tip" id="tip-pothos" role="tooltip">
+              <strong>Pothos</strong>
+              Easy trailing plant. Let vines hang for a fuller look; water when soil is partly dry.
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+<!-- greenery inspiration section end -->
+
+    <section class="spaces-section" id="spaces">
+      <div class="spaces-container">
+        <h1>Make your own space</h1>
+        <div class="heading-line"></div>
+        <div class="row g-4 spaces-grid">
+          <div class="col-12 col-sm-6 col-lg-3">
+            <a href="../spaces/garden.html" class="space-card">
+              <div class="space-card__image">
+                <img src="../images/garden.jpg" alt="Garden">
+              </div>
+              <h3>Garden</h3>
+            </a>
+          </div>
+
+          <div class="col-12 col-sm-6 col-lg-3">
+            <a href="../spaces/balcony.html" class="space-card">
+              <div class="space-card__image">
+                <img src="../images/balcony.jpg" alt="Balcony">
+              </div>
+              <h3>Balcony</h3>
+            </a>
+          </div>
+
+          <div class="col-12 col-sm-6 col-lg-3">
+            <a href="../spaces/living-room.html" class="space-card">
+              <div class="space-card__image">
+                <img src="../images/home.jpg" alt="Living room">
+              </div>
+              <h3>Living Room</h3>
+            </a>
+          </div>
+
+          <div class="col-12 col-sm-6 col-lg-3">
+            <a href="../spaces/office.html" class="space-card">
+              <div class="space-card__image">
+                <img src="../images/office.jpg" alt="Office">
+              </div>
+              <h3>Office</h3>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Arveli carousel -->
+    <section class="arveli-about" id="about" aria-labelledby="about-arveli-title">
+      <div class="arveli-about__heading">
+        <p class="arveli-about__eyebrow">About us</p>
+        <h3 id="about-arveli-title">A little more about Arveli</h3>
+      </div>
+
+      <div class="arveli-carousel-container">
+        <button class="arveli-carousel-arrow prev" type="button" id="arveliAboutPrev" aria-label="Previous slide">
+          <span aria-hidden="true">&#10094;</span>
+        </button>
+        <button class="arveli-carousel-arrow next" type="button" id="arveliAboutNext" aria-label="Next slide">
+          <span aria-hidden="true">&#10095;</span>
+        </button>
+
+        <div class="arveli-carousel-viewport">
+          <div class="arveli-carousel-slides" id="arveliAboutSlides">
+
+            <article class="arveli-carousel-slide">
+              <div class="arveli-slide-image">
+                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="Green plants growing in nature">
+              </div>
+              <div class="arveli-slide-content">
+                <p class="arveli-slide-quote">"Don't just send a tree.<br>Send what you mean."</p>
+                <h3>What is Arveli?</h3>
+                <p>
+                  Arveli brings plants, gardening essentials, and plant discovery together in one place — helping you choose greenery that fits your space, lifestyle, or the feeling you want to share.
+                </p>
+              </div>
+            </article>
+
+            <article class="arveli-carousel-slide">
+              <div class="arveli-slide-image">
+                <img src="https://i.pinimg.com/736x/4a/96/9a/4a969afc1fe12faf62733db95c64dd6a.jpg" alt="Plants and greenery used as meaningful gifts">
+              </div>
+              <div class="arveli-slide-content">
+                <p class="arveli-slide-quote">"Express gratitude and love<br>through living nature."</p>
+                <h3>More Than Just Greenery</h3>
+                <p>
+                  A plant can brighten a room, mark a new beginning, or become a gift that keeps growing. Arveli is built around making those small moments feel more thoughtful and lasting.
+                </p>
+              </div>
+            </article>
+
+            <article class="arveli-carousel-slide">
+              <div class="arveli-slide-image">
+                <img src="https://i.pinimg.com/1200x/05/3b/93/053b93802099e22a9032017cb0c298de.jpg" alt="Decorative indoor greenery">
+              </div>
+              <div class="arveli-slide-content">
+                <p class="arveli-slide-quote">"For anyone seeking gifts<br>with purpose and emotion."</p>
+                <h3>For Every Kind of Plant Lover</h3>
+                <p>
+                  Whether you have a sunny balcony, a quiet living room, a busy office, or a growing garden, Arveli helps you find something that belongs in your space.
+                </p>
+              </div>
+            </article>
+
+            <article class="arveli-carousel-slide">
+              <div class="arveli-slide-image">
+                <img src="https://images.pexels.com/photos/13384736/pexels-photo-13384736.jpeg" alt="Indoor plants and a welcoming green space">
+              </div>
+              <div class="arveli-slide-content">
+                <p class="arveli-slide-quote">"The right plant can turn<br>a space into a feeling."</p>
+                <h3>Find Your Perfect Plant</h3>
+                <p>
+                  Not sure what to choose? Use our Plant Finder to discover plants based on your space, light, lifestyle, and preferences.
+                </p>
+                <a href="../plantfinder/plantfinder.html" class="arveli-slide-btn">Find your plant <span aria-hidden="true">&rarr;</span></a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <div class="arveli-carousel-footer">
+          <div class="arveli-carousel-dots" id="arveliAboutDots" role="tablist" aria-label="About Arveli slides">
+          <button type="button" data-slide="0" role="tab" aria-label="Go to slide 1" aria-selected="false"></button>
+          <button type="button" data-slide="1" role="tab" aria-label="Go to slide 2" aria-selected="false"></button>
+          <button type="button" class="active" data-slide="2" role="tab" aria-label="Go to slide 3" aria-selected="true"></button>
+          <button type="button" data-slide="3" role="tab" aria-label="Go to slide 4" aria-selected="false"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- About Arveli carousel end -->
+
+<!--footer section start-->
+
+  <footer class="footers">
+    <div class="footer-top">
+      <div class="logoof">
+        <img src="../images/white.png" alt="Logo" width="100" height="50">
+        <h1 class="footer-desc">Bring nature home with beautiful plants and easy care.<BR>A place that feels like home.</h1>
+      </div>
+      <div class="footer-about">
+        <div class="footer-shop">
+          <h3>Shop</h3>
+          <ul>
+            <li><a href="../plantshop/plantshop.html">Plants</a></li>
+            <li><a href="../seedshop/seedshop.html">Seeds</a></li>
+            <li><a href="../potshop/potshop.html">Pots</a></li>
+            <li><a href="../fertshop/fertshop.html">Soil &amp; Fertilizer</a></li>
+            <li><a href="../toolshop/tool.html">Tools</a></li>
+            <li><a href="../decorative/decoratives.html">Decorative</a></li>
+          </ul>
+        </div>
+        <div class="footer-policy">
+          <h3>Policy</h3>
+          <ul>
+            <li><a href="../contact/contact.html">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Return Policy</a></li>
+            <li><a href="#">Shipping Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h3>Keep In Touch</h3>
+          <div class="social-icons">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="5.5"/>
+              <circle cx="12" cy="12" r="4.5"/>
+              <circle cx="17.5" cy="6.5" r=".75"/>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 5.8a8.2 8.2 0 0 1-2.4.7 4.2 4.2 0 0 0 1.8-2.3 8.3 8.3 0 0 1-2.6 1 4.1 4.1 0 0 0-7 3.7A11.7 11.7 0 0 1 3 4.9a4.1 4.1 0 0 0 1.3 5.5 4 4 0 0 1-1.9-.5v.05a4.1 4.1 0 0 0 3.3 4 4.3 4.3 0 0 1-1.8.07 4.1 4.1 0 0 0 3.8 2.8 8.2 8.2 0 0 1-5.1 1.8A8.4 8.4 0 0 1 2 19.5a11.6 11.6 0 0 0 6.3 1.8c7.5 0 11.6-6.2 11.6-11.6v-.5A8.2 8.2 0 0 0 22 5.8z"/>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2.5" y="5" width="19" height="14" rx="4"/>
+              <path d="M10 16.5l5-3.5-5-3.5v7z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <p>&copy; 2026 Your Company. All rights reserved.</p>
+  </footer>
+  <script>
+    (() => {
+      const section = document.querySelector(".arveli-about");
+      const track = document.getElementById("arveliAboutSlides");
+      const dots = [...document.querySelectorAll("#arveliAboutDots button")];
+      const prev = document.getElementById("arveliAboutPrev");
+      const next = document.getElementById("arveliAboutNext");
+      if (!section || !track || !dots.length || !prev || !next) return;
+
+      let current = 2;
+      let timer;
+
+      const update = (index) => {
+        current = (index + dots.length) % dots.length;
+        track.style.transform = `translateX(-${current * 100}%)`;
+
+        dots.forEach((dot, i) => {
+          const active = i === current;
+          dot.classList.toggle("active", active);
+          dot.setAttribute("aria-selected", String(active));
+        });
+
+      };
+
+      const startAutoPlay = () => {
+        clearInterval(timer);
+        timer = setInterval(() => update(current + 1), 6000);
+      };
+
+      prev.addEventListener("click", () => {
+        update(current - 1);
+        startAutoPlay();
+      });
+
+      next.addEventListener("click", () => {
+        update(current + 1);
+        startAutoPlay();
+      });
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          update(Number(dot.dataset.slide));
+          startAutoPlay();
+        });
+      });
+
+      update(2);
+      startAutoPlay();
+    })();
+  </script>
+
+  <script src="wishlist.js"></script>
+  <script src="cart.js"></script>
+  <script src="global-search.js"></script>
+  <script src="chatbot.js"></script>
+  <script>
+    (() => {
+      const input = document.getElementById("home-search");
+      if (!input) return;
+      input.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter") return;
+        e.preventDefault();
+        const q = input.value.trim();
+        window.location.href =
+          "../plantshop/plantshop.html" +
+          (q ? `?q=${encodeURIComponent(q)}` : "");
+      });
+    })();
+  </script>
+</body>
+</html>
