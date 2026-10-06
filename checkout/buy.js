@@ -18,7 +18,15 @@ function getCartTotal(items) {
 
 function fixImagePath(path) {
   if (!path) return "../images/plant.jpeg";
-  const file = String(path).split("/").pop();
+  const imagePath = String(path).replace(/\\/g, "/");
+
+  if (/^(?:https?:)?\/\//i.test(imagePath) || imagePath.startsWith("/")) {
+    return imagePath;
+  }
+  if (imagePath.startsWith("../images/")) return imagePath;
+  if (imagePath.startsWith("images/")) return "../" + imagePath;
+
+  const file = imagePath.split("/").pop();
   return "../images/" + file;
 }
 

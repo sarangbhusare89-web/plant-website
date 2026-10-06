@@ -156,8 +156,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const quizGroups = document.querySelectorAll(".quiz-group");
 
   quizGroups.forEach((group) => {
-    const questionKey = group.getAttribute("data-question");
-    const buttons = group.querySelectorAll(".quiz-btn");
+    const questionKey = group.getAttribute("data-question"); // environment
+    const buttons = group.querySelectorAll(".quiz-btn"); // 2 button
 
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         btn.classList.add("active");
 
-        const value = btn.getAttribute("data-value");
+        const value = btn.getAttribute("data-value"); // return which button is it
 
         if (questionKey && value) {
           currentPreferences[questionKey] = value;
@@ -227,7 +227,7 @@ function findAndRenderRecommendations() {
     // Environment
     if (
       currentPreferences.environment &&
-      plant.environment === currentPreferences.environment
+      plant.environment === currentPreferences.environment  ////Ab .map() ek-ek plant check karega.
     ) {
       score += 35;
     }
@@ -274,7 +274,7 @@ function findAndRenderRecommendations() {
     .filter((item) => item.score > 20)
     .sort((a, b) => b.score - a.score);
 
-  renderPlantCards(matchingResults);
+  renderPlantCards(matchingResults);                                       // it sort the score plant in decending order.
 }
 
 // 5. DISPLAY PLANT CARDS
@@ -283,7 +283,7 @@ function renderPlantCards(results) {
 
   if (!container) return;
 
-  container.innerHTML = "";
+  container.innerHTML = "";                                   // it remove the previous cards
 
   if (results.length === 0) {
     container.innerHTML = `
@@ -295,7 +295,7 @@ function renderPlantCards(results) {
     return;
   }
 
-  results.forEach((item) => {
+  results.forEach((item) => {            // for each item 
     const plant = item.plant;
     const card = document.createElement("div");
 
